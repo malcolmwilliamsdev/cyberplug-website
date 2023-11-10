@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import '@fontsource/inter';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './globals.css'
 
 export const metadata: Metadata = {

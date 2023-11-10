@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import './page.css'
 import { 
   Typography, 
@@ -9,10 +9,15 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  AccordionGroup,}
+  AccordionGroup,
+  Input,
+  Textarea,
+  Select,
+  Option,
+}
   from '@mui/joy'
 
-import { Carousel } from 'react-bootstrap';
+
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -21,6 +26,13 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
 import { useMediaQuery } from '@uidotdev/usehooks';
 import Image from 'next/image';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
 
 export default function Home() {
 
@@ -32,11 +44,17 @@ export default function Home() {
   //button states
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const toggleServices = () => {
+    if(!isServicesOpen) {
+      setIsAboutOpen(false);
+    }
     setIsServicesOpen(!isServicesOpen);
   }
 
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const toggleAbout = () => {
+    if(!isAboutOpen) {
+      setIsServicesOpen(false);
+    }
     setIsAboutOpen(!isAboutOpen);
   }
 
@@ -92,6 +110,48 @@ export default function Home() {
     )
   }
 
+  const Carousel = () => {
+    return(
+      <Swiper
+          slidesPerView={1}
+          spaceBetween={0}
+          loop={true}
+          speed={450}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+          }}
+          /*pagination={{
+            clickable: true,
+          }}*/
+          navigation={true}
+          modules={[Pagination, Navigation, Autoplay]}
+        >
+          <SwiperSlide>
+            <Image className='carousel-img' src="/software.jpg" alt="software" width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}}/>
+            <div className='carousel-img-caption'>
+              <Typography level='h3' textColor={"#fff"}>Standalone Software</Typography>
+              {!isMobile && <Typography level="body-md" textColor={"#fff"}>Custom software that runs on Windows, Linux, or Mac</Typography>}
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+          <Image className='carousel-img' src="/web.jpg" alt="web" width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}}/>
+            <div className='carousel-img-caption'>
+              <Typography level='h3' textColor={"#fff"}>Web Development</Typography>
+              {!isMobile && <Typography level="body-md" textColor={"#fff"}>Your very own website made just the way you imagined</Typography>}
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+          <Image className='carousel-img' src="/mobile.jpg" alt="mobile" width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}}/>
+            <div className='carousel-img-caption'>
+              <Typography level='h3' textColor={"#fff"}>Mobile Applications</Typography>
+              {!isMobile && <Typography level="body-md" textColor={"#fff"}>Go mobile with your very own app for iOS and Android</Typography>}
+            </div>
+          </SwiperSlide>
+        </Swiper>
+      )
+  }
+
   //page TSX
   return (
     <React.Fragment>
@@ -129,39 +189,29 @@ export default function Home() {
         </>
         )}
       </nav>
-      <main className="main">        
-        <Carousel pause={false}>
-          <Carousel.Item interval={5000}>
-            <img className="carousel-img" src="/software.jpg" alt='pic'/>
-            <Carousel.Caption>
-              <Typography level='h3' textColor={"#fff"}>Software Development</Typography>
-              {/*
-              <p>Crafting tailored software solutions to meet your unique business needs, from desktop applications to enterprise-level systems.</p>
-              */}
-              </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item interval={5000}>
-          <img className="carousel-img" src="/web.jpg" alt='pic'/>
-            <Carousel.Caption>
-            <Typography level='h3' textColor={"#fff"}>Web Development</Typography>
-              {/*
-              <p>Building dynamic and user-friendly websites that enhance your online presence, ensuring seamless user experiences across all devices.</p>
-              */}
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item interval={5000}>
-          <img className="carousel-img" src="/mobile.jpg" alt='pic'/>
-            <Carousel.Caption>
-            <Typography level='h3' textColor={"#fff"}>Mobile App Development</Typography>
-              {/*}
-              <p>Creating cutting-edge mobile applications for iOS and Android platforms, combining intuitive design with powerful functionality for optimal user engagement.</p>
-            */}
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
+      <main className="main">     
+        <Carousel/>
+        <div className='form-contact-container'>
+          <Typography level='h1' textColor={"#fff"}>Tell us about your goals!</Typography>
+          <form className='form-contact-main'>
+            <div className='form-contact-section left'>
+              <Input variant='outlined' placeholder='Name'/>
+              <Input variant='outlined' placeholder='Company'/>
+              <Select defaultValue={"Web Development"}>
+                <Option value={"Software Development"}>Software Development</Option>
+                <Option value={"Web Development"}>Web Development</Option>
+                <Option value={"Mobile App Development"}>Mobile App Development</Option>
+              </Select>
+            </div>
+            <div className='form-contact-section right'>
+              <Textarea variant='outlined' placeholder='Details'/>
+            </div>
+          </form>  
+        </div>
+        <Typography level='h1' textColor={"#fff"}>FAQs</Typography>
         <AccordionGroup size='lg' variant='soft' transition="0.25s ease">
           <Accordion>
-            <AccordionSummary><b>Will you work on our project from dream to reality?</b></AccordionSummary>
+            <AccordionSummary><b>Will you work on my project from dream to reality?</b></AccordionSummary>
             <AccordionDetails>
               Of course! That is what we are here to do. Our IT professionals will cover requirement gathering, system design, coding, deployment, and maintenance.
             </AccordionDetails>
@@ -175,7 +225,7 @@ export default function Home() {
           <Accordion>
             <AccordionSummary><b>How much does it cost?</b></AccordionSummary>
             <AccordionDetails>
-              We have fixed plans and hourly plans. Fixed plans work well for well-defined, small projects. After collecting your requirements, we can negotiate a fixed price. Larger or complex projects more prone to change, fit best with our hourly rate of $45/hr.
+              We provide our services at an our hourly rate of $45/hr. We can also negotiate a fixed price on a case-by-case basis.
             </AccordionDetails>
           </Accordion>
           <Accordion>
@@ -185,37 +235,35 @@ export default function Home() {
             </AccordionDetails>
           </Accordion>
         </AccordionGroup>
+        
       </main>
+      
       <footer>
         <Cyberplug/>
         <div className='footer-flex'>
           <div className='footer-flex-group'>
             <a href='#'><Typography level="h4" textColor={"#fff"}>Contact</Typography></a>
-            <Divider/>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Phone: +1 909 963 2559</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Email: contact@cyberplug.net</Typography></a>
           </div>
           <div className='footer-flex-group'>
             <a href='#'><Typography level="h4" textColor={"#fff"}>About</Typography></a>
-            <Divider/>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Why Cyberplug</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Who we serve</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Portfolio</Typography></a>
           </div>
           <div className='footer-flex-group'>
             <a href='#'><Typography level="h4" textColor={"#fff"}>Services</Typography></a>
-            <Divider/>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Software Development</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Web Development</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Mobile App Development</Typography></a>
           </div>
           <div className='footer-flex-group'>
             <a href='#'><Typography level="h4" textColor={"#fff"}>Legal</Typography></a>
-            <Divider/>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Terms of Use</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Privacy Policy</Typography></a>
           </div>
-          <div className='footer-flex-group'>
+          <div className='footer-flex-group last'>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>&#169; {new Date().getFullYear()} Cyberplug LLC</Typography></a>
           </div>
         </div>

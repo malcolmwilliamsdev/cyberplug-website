@@ -15,7 +15,7 @@ nav {
 }
 
 .nav-button-group {
-    margin-left: 3em;
+    margin-left: 5em;
     display: flex;
     width: 100%;
     justify-content: flex-start;
@@ -46,11 +46,38 @@ nav {
     width: 100%;
 }
 
+.carousel-img-caption {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.form-contact-container {
+    width: 100%;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+.form-contact-main {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-contact-section.left {
+    flex: 1;
+}
+
+.form-contact-section.right {
+    flex: 2;
+}
+
 footer {
     width: 100%;
     padding: 1em;
-    margin-top: 5em;
     background-color: var(--bkg-grad-end);
+    margin-top: 3em;
 }
 
 .footer-flex {
@@ -60,6 +87,12 @@ footer {
 }
 
 .footer-flex-group {
-    margin-right: 4em;
-    margin-bottom: 2em;;
+    margin-bottom: 2em;
+    /*border: #fff solid 1px;*/
+    min-width: 225px;
 }
+
+.footer-flex-group.last {
+    margin-right: 0;
+}
+

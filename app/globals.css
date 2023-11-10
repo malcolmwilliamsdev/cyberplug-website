@@ -9,11 +9,13 @@ Tailwind is interfering with Joy UI components*/
 :root {
   --bkg-grad-start: #a3bded;
   --bkg-grad-end: #6991c7;
+  --swiper-navigation-color: #ffffff55!important
 }
 
 html {
   min-height: 100%;
   color: #fff;
+  overflow-y: scroll;
 }
 
 body {
