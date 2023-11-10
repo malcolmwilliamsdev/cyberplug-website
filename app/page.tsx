@@ -1,113 +1,225 @@
-import Image from 'next/image'
+"use client";
+import React, {useEffect, useState} from 'react'
+import './page.css'
+import { 
+  Typography, 
+  Stack, 
+  Button,
+  Divider,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  AccordionGroup,}
+  from '@mui/joy'
+
+import { Carousel } from 'react-bootstrap';
+
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import MenuIcon from '@mui/icons-material/Menu';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+
+import { useMediaQuery } from '@uidotdev/usehooks';
+import Image from 'next/image';
 
 export default function Home() {
+
+  //media query
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isTablet = useMediaQuery("(max-width: 1024px)");
+
+
+  //button states
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const toggleServices = () => {
+    setIsServicesOpen(!isServicesOpen);
+  }
+
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const toggleAbout = () => {
+    setIsAboutOpen(!isAboutOpen);
+  }
+
+  //components
+
+  const Cyberplug = () => {
+    const level = isMobile ? "h3" : "h1";
+    const size = isMobile? 32:48;
+    return (
+      <div className='no-select pointer' style={{display:"flex"}}>
+        <Image src="/plug.svg" width={size} height={size} style={{ transform: "rotate(-90deg)" }} alt="icon" />
+        <Typography level={level} textColor={"#fff"}>yberplug</Typography>
+      </div>
+    )
+  }
+
+  const NavLinks = () => {
+    return(
+      <React.Fragment>
+        <div className="nav-button-group">
+                <Stack direction={"row"} spacing={3}>
+                  <div className='nav-button no-select' onClick={toggleAbout}>
+                    <Typography textColor={"#fff"} >About</Typography>
+                    {isAboutOpen? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon /> }
+                  </div>
+                  <div className='nav-button no-select' onClick={toggleServices}>
+                    <Typography textColor={"#fff"} >Services</Typography>
+                    {isServicesOpen? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon /> }
+                  </div>
+                  <div className='nav-button no-select'>
+                    <Typography textColor={"#fff"}>Pricing</Typography>
+                  </div>
+                  <div className='nav-button no-select'>
+                    <Typography textColor={"#fff"}>Support</Typography>
+                  </div>
+                </Stack>
+              </div>
+      </React.Fragment>
+    )
+  }
+
+  const Contact = () => {
+    return(
+      <React.Fragment>
+        <Stack direction={"row"} spacing={1}>
+        <Button variant={"soft"} sx={{whiteSpace:"nowrap"}}>
+          <LocalPhoneIcon/>
+          {!isMobile && <span>+1 909 963 2559</span>}
+        </Button>
+
+        </Stack>
+      </React.Fragment>
+    )
+  }
+
+  //page TSX
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <React.Fragment>
+      <nav>
+        {isMobile ? (
+          <>
+            <Cyberplug/>
+            <div className="nav-mobile-group">
+              <Stack direction={"row"} spacing={2} marginRight={"0.5em"}>
+                <Contact/>
+                <MenuIcon fontSize='large' sx={{alignSelf:"center"}}/>
+              </Stack>
+            </div>
+          </>
+        ):(
+          <>
+            {isTablet ? (
+              <>
+                <Cyberplug/>
+                <div className="nav-mobile-group">
+                  <Stack direction={"row"} spacing={2} marginRight={"0.5em"}>
+                    <Contact/>
+                    <Divider orientation="vertical"/>
+                    <MenuIcon fontSize='large' sx={{alignSelf:"center"}}/>
+                  </Stack>
+                </div>
+              </>
+            ):(
+              <>
+                <Cyberplug/>
+                <NavLinks/>
+                <Contact/>  
+              </>
+            )}
+        </>
+        )}
+      </nav>
+      <main className="main">        
+        <Carousel pause={false}>
+          <Carousel.Item interval={5000}>
+            <img className="carousel-img" src="/software.jpg" alt='pic'/>
+            <Carousel.Caption>
+              <Typography level='h3' textColor={"#fff"}>Software Development</Typography>
+              {/*
+              <p>Crafting tailored software solutions to meet your unique business needs, from desktop applications to enterprise-level systems.</p>
+              */}
+              </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item interval={5000}>
+          <img className="carousel-img" src="/web.jpg" alt='pic'/>
+            <Carousel.Caption>
+            <Typography level='h3' textColor={"#fff"}>Web Development</Typography>
+              {/*
+              <p>Building dynamic and user-friendly websites that enhance your online presence, ensuring seamless user experiences across all devices.</p>
+              */}
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item interval={5000}>
+          <img className="carousel-img" src="/mobile.jpg" alt='pic'/>
+            <Carousel.Caption>
+            <Typography level='h3' textColor={"#fff"}>Mobile App Development</Typography>
+              {/*}
+              <p>Creating cutting-edge mobile applications for iOS and Android platforms, combining intuitive design with powerful functionality for optimal user engagement.</p>
+            */}
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+        <AccordionGroup size='lg' variant='soft' transition="0.25s ease">
+          <Accordion>
+            <AccordionSummary><b>Will you work on our project from dream to reality?</b></AccordionSummary>
+            <AccordionDetails>
+              Of course! That is what we are here to do. Our IT professionals will cover requirement gathering, system design, coding, deployment, and maintenance.
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary><b>How long will my project take?</b></AccordionSummary>
+            <AccordionDetails>
+              This can depend on a lot of factors such as how many features are required and how complex they are. A simple blogging website may be deployed in as little as 2 weeks, whereas a more complex, cross-platform mobile app may take 6 months.
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary><b>How much does it cost?</b></AccordionSummary>
+            <AccordionDetails>
+              We have fixed plans and hourly plans. Fixed plans work well for well-defined, small projects. After collecting your requirements, we can negotiate a fixed price. Larger or complex projects more prone to change, fit best with our hourly rate of $45/hr.
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary><b>What is your post-deployment policy?</b></AccordionSummary>
+            <AccordionDetails>
+              After a project has been completed, we will provide free support and maintenance for up to 90 days. Upon further agreement, we can provide further support and maintenance. 
+            </AccordionDetails>
+          </Accordion>
+        </AccordionGroup>
+      </main>
+      <footer>
+        <Cyberplug/>
+        <div className='footer-flex'>
+          <div className='footer-flex-group'>
+            <a href='#'><Typography level="h4" textColor={"#fff"}>Contact</Typography></a>
+            <Divider/>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Phone: +1 909 963 2559</Typography></a>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Email: contact@cyberplug.net</Typography></a>
+          </div>
+          <div className='footer-flex-group'>
+            <a href='#'><Typography level="h4" textColor={"#fff"}>About</Typography></a>
+            <Divider/>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Why Cyberplug</Typography></a>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Who we serve</Typography></a>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Portfolio</Typography></a>
+          </div>
+          <div className='footer-flex-group'>
+            <a href='#'><Typography level="h4" textColor={"#fff"}>Services</Typography></a>
+            <Divider/>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Software Development</Typography></a>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Web Development</Typography></a>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Mobile App Development</Typography></a>
+          </div>
+          <div className='footer-flex-group'>
+            <a href='#'><Typography level="h4" textColor={"#fff"}>Legal</Typography></a>
+            <Divider/>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Terms of Use</Typography></a>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Privacy Policy</Typography></a>
+          </div>
+          <div className='footer-flex-group'>
+            <a href='#'><Typography level="body-sm" textColor={"#fff"}>&#169; {new Date().getFullYear()} Cyberplug LLC</Typography></a>
+          </div>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      </footer>
+    </React.Fragment>
   )
 }
