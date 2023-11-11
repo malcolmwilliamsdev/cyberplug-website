@@ -1,10 +1,6 @@
-
-/*
-Tailwind is interfering with Joy UI components
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*/
 
 :root {
   --bkg-grad-start: #a3bded;

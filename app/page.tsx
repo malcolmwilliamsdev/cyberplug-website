@@ -1,5 +1,4 @@
 "use client";
-
 import React, {useState} from 'react';
 import './page.css';
 import { 
@@ -15,6 +14,7 @@ import {
   Textarea,
   Select,
   Option,
+  Drawer,
 }
   from '@mui/joy';
 
@@ -35,6 +35,8 @@ import 'swiper/css/effect-coverflow';
 
 export default function Home() {
 
+  const phoneNum = "+1 909 963 2559";
+
   //button states
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const toggleServices = () => {
@@ -51,6 +53,8 @@ export default function Home() {
     }
     setIsAboutOpen(!isAboutOpen);
   }
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   //components
   const Carousel = () => {
@@ -190,6 +194,9 @@ export default function Home() {
           <SwiperSlide>
             <img className='tool-img' src="/logos/flutter.svg" alt="flutter" />
           </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/dot-net.svg" alt="dot net" />
+          </SwiperSlide>
         </Swiper>
       </div>
     );
@@ -268,7 +275,7 @@ export default function Home() {
       <div className="tools-container">
         <Typography level='h1' textColor={"#1a6db0"}>Tools we use</Typography>
         <div className='tools-section'>
-          <Typography level='body-lg' textColor={"#fff"} sx={{marginBottom:".5em"}}>We always make sure to choose the right tool to get the job done.</Typography>
+          <Typography level='body-lg' textColor={"#fff"} sx={{marginBottom:".5em"}}>We always make sure to choose the right tool for the job.</Typography>
           <StandaloneTools/>
           <WebTools/>
           <MobileTools/>
@@ -302,21 +309,21 @@ export default function Home() {
               {isAboutOpen ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
             </div>
             <div className='no-select pointer' style={{display:"flex"}} onClick={toggleServices}>
-              <Typography textColor={"#fff"}>Service</Typography>
+              <Typography textColor={"#fff"}>Services</Typography>
               {isServicesOpen ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
             </div>
             <span className='no-select pointer'><Typography textColor={"#fff"}>Pricing</Typography></span>
             <span className='no-select pointer'><Typography textColor={"#fff"}>Support</Typography></span>
           </Stack>
           <div className='right-align'>
-            <Button variant='soft'><LocalPhoneIcon sx={{marginRight:"0.5em"}}/>+1 909 963 2559</Button>
+            <Button variant='soft'><LocalPhoneIcon sx={{marginRight:"0.5em"}}/>{phoneNum}</Button>
           </div>
         </div>
         <div className='nav-menu-group show-tablet-only'>
           <div className='right-align'>
             <Stack direction={"row"} spacing={2}>
-              <Button variant='soft'><LocalPhoneIcon sx={{marginRight:"0.5em"}}/>+1 909 963 2559</Button>
-              <MenuIcon fontSize='large'/>
+              <Button variant='soft'><LocalPhoneIcon sx={{marginRight:"0.5em"}}/>{phoneNum}</Button>
+              <span onClick={()=>setIsDrawerOpen(true)}><MenuIcon fontSize='large'/></span>
             </Stack>
           </div>
         </div>
@@ -324,7 +331,7 @@ export default function Home() {
           <div className='right-align'>
             <Stack direction={"row"} spacing={2}>
               <Button variant='soft'><LocalPhoneIcon/></Button>
-              <MenuIcon fontSize='large'/>
+              <span onClick={()=>setIsDrawerOpen(true)}><MenuIcon fontSize='large'/></span>
             </Stack>
           </div>
         </div>
@@ -414,30 +421,32 @@ export default function Home() {
       <footer>
         <Logo/>
         <div className='footer-flex'>
+          {
           <div className='footer-flex-group'>
             <Typography level="h4" textColor={"#fff"}>Contact</Typography>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Phone: +1 909 963 2559</Typography></a>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Email: contact@cyberplug.net</Typography></a>
+            <Typography level="body-sm" textColor={"#fff"}>Phone: <span>{phoneNum}</span></Typography>
+            <Typography level="body-sm" textColor={"#fff"}>Email: contact@cyberplug.net</Typography>
           </div>
+          }
           <div className='footer-flex-group'>
             <Typography level="h4" textColor={"#fff"}>About</Typography>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Why Cyberplug</Typography></a>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Who we serve</Typography></a>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Portfolio</Typography></a>
+            <Typography level="body-sm" textColor={"#fff"}>Why Cyberplug</Typography>
+            <Typography level="body-sm" textColor={"#fff"}>Who we serve</Typography>
+            <Typography level="body-sm" textColor={"#fff"}>Portfolio</Typography>
           </div>
           <div className='footer-flex-group'>
             <Typography level="h4" textColor={"#fff"}>Services</Typography>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Software Development</Typography></a>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Web Development</Typography></a>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Mobile App Development</Typography></a>
+            <Typography level="body-sm" textColor={"#fff"}>Software Development</Typography>
+            <Typography level="body-sm" textColor={"#fff"}>Web Development</Typography>
+            <Typography level="body-sm" textColor={"#fff"}>Mobile App Development</Typography>
           </div>
           <div className='footer-flex-group'>
             <Typography level="h4" textColor={"#fff"}>Legal</Typography>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Terms of Use</Typography></a>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>Privacy Policy</Typography></a>
+            <Typography level="body-sm" textColor={"#fff"}>Terms of Use</Typography>
+            <Typography level="body-sm" textColor={"#fff"}>Privacy Policy</Typography>
           </div>
           <div className='footer-flex-group last'>
-            <a href='#'><Typography level="body-sm" textColor={"#fff"}>&#169; {new Date().getFullYear()} Cyberplug LLC</Typography></a>
+            <Typography level="body-sm" textColor={"#fff"}>&#169; {new Date().getFullYear()} Cyberplug LLC</Typography>
           </div>
         </div>
       </footer>
@@ -448,6 +457,9 @@ export default function Home() {
   return (
     <React.Fragment>
       <Navbar/>
+      <Drawer open={isDrawerOpen} onClose={()=>setIsDrawerOpen(false)} anchor='top' hideBackdrop={false} size='sm'>
+        Test
+      </Drawer>
       <main className="main">     
         <Carousel/>
         <div className='main-padded'>
