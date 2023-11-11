@@ -4,46 +4,34 @@ main {
     max-width: 1280px;
 }
 
+.main-padded {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
 nav {
     background-color: #10101000;
     border-bottom: #fff solid 0px;
-    height: 4em;
     display: flex;
     align-items: center;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
+    padding: .75em 0.5em .75em 0.5em;
 }
 
-.nav-button-group {
-    margin-left: 5em;
-    display: flex;
+.nav-menu-group {
+    margin-left: 2em;
+    align-items: center;
     width: 100%;
-    justify-content: flex-start;
-}
 
-.nav-button {
-    padding: 0.5em;
-    outline: white solid 0px;
-    display: flex;
-    cursor: pointer;
-}
-
-.nav-mobile-group {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-}
-
-.no-select {
-    user-select: none;
-}
-
-.pointer {
-    cursor: pointer;
+    .right-align {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+    }
 }
 
 .carousel-img {
     width: 100%;
+    height: auto;
 }
 
 .carousel-img-caption {
@@ -54,27 +42,73 @@ nav {
     text-align: center;
 }
 
-.form-contact-container {
+.tool-swiper{
     width: 100%;
-    margin-top: 3em;
-    margin-bottom: 3em;
+    padding: 2em;
+    margin-top: 2em;
+    margin: 2em 0 2em 0;
+
+    background-image: linear-gradient(to right, #5D9FFF00 0%, #B8DCFF 50%, #6BBBFF00 100%);
+
+    .swiper-slide {
+        width: calc(min(1280px, 100vw) * .1);
+        height: calc(min(1280px, 100vw) * .1);
+        margin: 0 2em 0 2em;
+    }
+
+    .tool-img {
+        width: 100%;
+        height: 100%;
+    }
 }
 
-.form-contact-main {
-    display: flex;
-    flex-wrap: wrap;
+.questions {
+    margin-top: 2em;
 }
 
-.form-contact-section.left {
-    flex: 1;
+.tools-container {
+    margin-top: 2em;
 }
 
-.form-contact-section.right {
-    flex: 2;
+.tools-section {
+    padding: 1em;
+    border-radius: 10px;
+
+}    
+
+.contact-form-container {
+    margin-top: 2em;
 }
+
+.contact-form-grid {
+    padding: 1em;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 1em;
+    row-gap: 1em;
+    border-radius: 10px;
+
+    background-image: linear-gradient(to top, #accbee00 0%, #e7f0fd 150%);
+}
+
+.contact-form-field {
+    width: 100%;
+    height: 100%;
+
+    grid-column: span 1;
+    grid-row: span 1;
+}
+
+.contact-form-area {
+    width: 100%;
+    height: 100%;
+    
+    grid-column: span 2;
+    grid-row: 2/span 3;
+}
+
 
 footer {
-    width: 100%;
     padding: 1em;
     background-color: var(--bkg-grad-end);
     margin-top: 3em;
@@ -94,5 +128,92 @@ footer {
 
 .footer-flex-group.last {
     margin-right: 0;
+}
+
+.logo-pic {
+    transform: rotate(-90deg);
+    width: 48px;
+    height: 48px;
+}
+
+.logo-text {
+    font-size: 2em;
+    font-weight: bolder;
+}
+
+.show-desktop-only,
+.show-tablet-only,
+.show-mobile-only,
+.show-not-mobile {
+    display: none;
+}
+
+/*desktop*/
+@media screen and (min-width: 1024px) {
+    .show-desktop-only {
+        display: flex;
+    }
+
+    .show-not-mobile {
+        display: flex;
+    }
+}
+
+/*within tablet*/
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .show-tablet-only {
+        display: flex;
+    }
+
+    .show-not-mobile {
+        display: flex;
+    }
+
+    .contact-form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contact-form-area {   
+        grid-column: 2/span 1;
+        grid-row: 2/span 4;
+    }
+}
+
+/*within mobile*/
+@media screen and (max-width: 767px) {
+    .show-mobile-only{
+        display: flex;
+    }
+
+    .show-not-mobile {
+        display: none;
+    }
+
+    .logo-pic {
+        width: 32px;
+        height: 32px;
+    }
+
+    .logo-text {
+        font-size: 1.32em;
+        font-weight: bolder;
+    }
+
+    .contact-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-form-area {   
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .tool-swiper{
+        .swiper-slide {
+            width: calc(min(1280px, 100vw) * .15);
+            height: calc(min(1280px, 100vw) * .15);
+            margin: 0 1em 0 1em;
+        }
+    }
 }
 

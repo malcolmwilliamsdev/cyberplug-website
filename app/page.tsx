@@ -1,6 +1,7 @@
 "use client";
-import React, {useState} from 'react'
-import './page.css'
+
+import React, {useState} from 'react';
+import './page.css';
 import { 
   Typography, 
   Stack, 
@@ -15,31 +16,24 @@ import {
   Select,
   Option,
 }
-  from '@mui/joy'
-
-
+  from '@mui/joy';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import MenuIcon from '@mui/icons-material/Menu';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 
-import { useMediaQuery } from '@uidotdev/usehooks';
 import Image from 'next/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+import { Pagination, Navigation, Autoplay, EffectCoverflow } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import 'swiper/css/effect-coverflow';
 
 
 export default function Home() {
-
-  //media query
-  const isMobile = useMediaQuery("(max-width: 768px)");
-  const isTablet = useMediaQuery("(max-width: 1024px)");
-
 
   //button states
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -59,61 +53,11 @@ export default function Home() {
   }
 
   //components
-
-  const Cyberplug = () => {
-    const level = isMobile ? "h3" : "h1";
-    const size = isMobile? 32:48;
-    return (
-      <div className='no-select pointer' style={{display:"flex"}}>
-        <Image src="/plug.svg" width={size} height={size} style={{ transform: "rotate(-90deg)" }} alt="icon" />
-        <Typography level={level} textColor={"#fff"}>yberplug</Typography>
-      </div>
-    )
-  }
-
-  const NavLinks = () => {
-    return(
-      <React.Fragment>
-        <div className="nav-button-group">
-                <Stack direction={"row"} spacing={3}>
-                  <div className='nav-button no-select' onClick={toggleAbout}>
-                    <Typography textColor={"#fff"} >About</Typography>
-                    {isAboutOpen? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon /> }
-                  </div>
-                  <div className='nav-button no-select' onClick={toggleServices}>
-                    <Typography textColor={"#fff"} >Services</Typography>
-                    {isServicesOpen? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon /> }
-                  </div>
-                  <div className='nav-button no-select'>
-                    <Typography textColor={"#fff"}>Pricing</Typography>
-                  </div>
-                  <div className='nav-button no-select'>
-                    <Typography textColor={"#fff"}>Support</Typography>
-                  </div>
-                </Stack>
-              </div>
-      </React.Fragment>
-    )
-  }
-
-  const Contact = () => {
-    return(
-      <React.Fragment>
-        <Stack direction={"row"} spacing={1}>
-        <Button variant={"soft"} sx={{whiteSpace:"nowrap"}}>
-          <LocalPhoneIcon/>
-          {!isMobile && <span>+1 909 963 2559</span>}
-        </Button>
-
-        </Stack>
-      </React.Fragment>
-    )
-  }
-
   const Carousel = () => {
     return(
       <Swiper
           slidesPerView={1}
+          slidesPerGroupSkip={0}
           spaceBetween={0}
           loop={true}
           speed={450}
@@ -125,90 +69,316 @@ export default function Home() {
             clickable: true,
           }}*/
           navigation={true}
-          modules={[Pagination, Navigation, Autoplay]}
+          modules={[/*Pagination,*/ Navigation, Autoplay]}
         >
           <SwiperSlide>
-            <Image className='carousel-img' src="/software.jpg" alt="software" width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}}/>
+            <Image className='carousel-img' src="/software.jpg" alt="software" width={0} height={0} sizes="100vw"/>
             <div className='carousel-img-caption'>
               <Typography level='h3' textColor={"#fff"}>Standalone Software</Typography>
-              {!isMobile && <Typography level="body-md" textColor={"#fff"}>Custom software that runs on Windows, Linux, or Mac</Typography>}
+              <span className='show-not-mobile'><Typography level="body-md" textColor={"#fff"}>Custom software that runs on Windows, Linux, or Mac</Typography></span>
             </div>
           </SwiperSlide>
           <SwiperSlide>
-          <Image className='carousel-img' src="/web.jpg" alt="web" width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}}/>
+          <Image className='carousel-img' src="/web.jpg" alt="web" width={0} height={0} sizes="100vw"/>
             <div className='carousel-img-caption'>
               <Typography level='h3' textColor={"#fff"}>Web Development</Typography>
-              {!isMobile && <Typography level="body-md" textColor={"#fff"}>Your very own website made just the way you imagined</Typography>}
+              <span className='show-not-mobile'><Typography level="body-md" textColor={"#fff"}>Your very own website made just the way you imagined</Typography></span>
             </div>
           </SwiperSlide>
           <SwiperSlide>
-          <Image className='carousel-img' src="/mobile.jpg" alt="mobile" width={0} height={0} sizes="100vw" style={{width:"100%", height:"auto"}}/>
+          <Image className='carousel-img' src="/mobile.jpg" alt="mobile" width={0} height={0} sizes="100vw"/>
             <div className='carousel-img-caption'>
               <Typography level='h3' textColor={"#fff"}>Mobile Applications</Typography>
-              {!isMobile && <Typography level="body-md" textColor={"#fff"}>Go mobile with your very own app for iOS and Android</Typography>}
+              <span className='show-not-mobile'><Typography level="body-md" textColor={"#fff"}>Go mobile with your very own app for iOS and Android</Typography></span>
             </div>
           </SwiperSlide>
         </Swiper>
       )
   }
 
-  //page TSX
-  return (
-    <React.Fragment>
-      <nav>
-        {isMobile ? (
-          <>
-            <Cyberplug/>
-            <div className="nav-mobile-group">
-              <Stack direction={"row"} spacing={2} marginRight={"0.5em"}>
-                <Contact/>
-                <MenuIcon fontSize='large' sx={{alignSelf:"center"}}/>
-              </Stack>
-            </div>
-          </>
-        ):(
-          <>
-            {isTablet ? (
-              <>
-                <Cyberplug/>
-                <div className="nav-mobile-group">
-                  <Stack direction={"row"} spacing={2} marginRight={"0.5em"}>
-                    <Contact/>
-                    <Divider orientation="vertical"/>
-                    <MenuIcon fontSize='large' sx={{alignSelf:"center"}}/>
-                  </Stack>
-                </div>
-              </>
-            ):(
-              <>
-                <Cyberplug/>
-                <NavLinks/>
-                <Contact/>  
-              </>
-            )}
-        </>
-        )}
-      </nav>
-      <main className="main">     
-        <Carousel/>
-        <div className='form-contact-container'>
-          <Typography level='h1' textColor={"#fff"}>Tell us about your goals!</Typography>
-          <form className='form-contact-main'>
-            <div className='form-contact-section left'>
-              <Input variant='outlined' placeholder='Name'/>
-              <Input variant='outlined' placeholder='Company'/>
-              <Select defaultValue={"Web Development"}>
-                <Option value={"Software Development"}>Software Development</Option>
-                <Option value={"Web Development"}>Web Development</Option>
-                <Option value={"Mobile App Development"}>Mobile App Development</Option>
-              </Select>
-            </div>
-            <div className='form-contact-section right'>
-              <Textarea variant='outlined' placeholder='Details'/>
-            </div>
-          </form>  
+  const StandaloneTools = () => {
+    return (
+      <div style={{width:"100%"}}>
+        <Typography level="h4" textColor='#fff' sx={{marginLeft:"2em"}}>Standalone</Typography>
+        <Swiper
+          effect={'coverflow'}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={'auto'}
+          coverflowEffect={{
+            rotate: 55,
+            stretch: 0,
+            depth: 200,
+            modifier: 0.5,
+            slideShadows: false,
+          }}
+          pagination={false}
+          modules={[EffectCoverflow, Pagination]}
+          className='tool-swiper'
+        >
+          
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/c++.svg" alt="c++" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/c-sharp.svg" alt="c#" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/java.svg" alt="java" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/python.svg" alt="python" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/qt.svg" alt="qt" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/unity.svg" alt="unity" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/pygame.svg" alt="pygame" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/sfml.svg" alt="sfml" />
+          </SwiperSlide>
+          {/* <SwiperSlide>
+            <img className='tool-img' src="/logos/raylib.svg" alt="raylib" />
+          </SwiperSlide>*/}
+        </Swiper>
+      </div>
+    );
+  }
+
+  const WebTools = () => {
+    return (
+      <div style={{width:"100%"}}>
+        <Typography level='h4' textColor='#fff' sx={{marginLeft:"2em"}}>Web</Typography>
+        <Swiper
+          effect={'coverflow'}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={'auto'}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 200,
+            modifier: 0.5,
+            slideShadows: false,
+          }}
+          pagination={false}
+          modules={[EffectCoverflow, Pagination]}
+          className='tool-swiper'
+        >
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/html5.svg" alt="html" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/css3.svg" alt="css" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/javascript.svg" alt="js" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/react-js.svg" alt="react-js" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/next-js.svg" alt="next-js" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/vue-js.svg" alt="vue-js" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/flutter.svg" alt="flutter" />
+          </SwiperSlide>
+        </Swiper>
+      </div>
+    );
+  }
+
+  const MobileTools = () => {
+    return (
+      <div style={{width:"100%"}}>
+        <Typography level='h4' textColor='#fff' sx={{marginLeft:"2em"}}>Mobile</Typography>
+        <Swiper
+          effect={'coverflow'}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={'auto'}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 200,
+            modifier: 0.5,
+            slideShadows: false,
+          }}
+          pagination={false}
+          modules={[EffectCoverflow, Pagination]}
+          className='tool-swiper'
+        >
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/react-native.svg" alt="react native" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/flutter.svg" alt="flutter" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/ionic.svg" alt="ionic" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/unity.svg" alt="unity" />
+          </SwiperSlide>
+        </Swiper>
+      </div>
+    );
+  }
+
+  const CloudTools = () => {
+    return (
+      <div style={{width:"100%"}}>
+        <Typography level='h4' textColor='#fff' sx={{marginLeft:"2em"}}>Cloud</Typography>
+        <Swiper
+          effect={'coverflow'}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={'auto'}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 200,
+            modifier: 0.5,
+            slideShadows: false,
+          }}
+          pagination={false}
+          modules={[EffectCoverflow, Pagination]}
+          className='tool-swiper'
+        >
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/aws.svg" alt="aws" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img className='tool-img' src="/logos/firebase.svg" alt="firebase" />
+          </SwiperSlide>
+        </Swiper>
+      </div>
+    );
+  }
+
+  const ToolsSection = () => {
+    return (
+      <div className="tools-container">
+        <Typography level='h1' textColor={"#1a6db0"}>Tools we use</Typography>
+        <div className='tools-section'>
+          <Typography level='body-lg' textColor={"#fff"} sx={{marginBottom:".5em"}}>We always make sure to choose the right tool to get the job done.</Typography>
+          <StandaloneTools/>
+          <WebTools/>
+          <MobileTools/>
+          <CloudTools/>
         </div>
-        <Typography level='h1' textColor={"#fff"}>FAQs</Typography>
+      </div>
+      
+    )
+  }
+  
+
+  //logo
+  const Logo = () => {
+    return (
+      <div className='no-select pointer' style={{display:"flex", alignItems:"center"}}>
+        <Image className='logo-pic' src="/plug.svg" alt="plug" width={0} height={0} sizes="100vw"/>
+        <span className='logo-text'>yberplug</span>
+      </div>
+    )
+  }
+
+  //nav bar
+  const Navbar = () => {
+    return (
+      <nav>
+        <Logo/>
+        <div className='nav-menu-group show-desktop-only'>
+          <Stack direction={"row"} spacing={2}>
+            <div className='no-select pointer' style={{display:"flex"}} onClick={toggleAbout}>
+              <Typography textColor={"#fff"}>About</Typography>
+              {isAboutOpen ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
+            </div>
+            <div className='no-select pointer' style={{display:"flex"}} onClick={toggleServices}>
+              <Typography textColor={"#fff"}>Service</Typography>
+              {isServicesOpen ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
+            </div>
+            <span className='no-select pointer'><Typography textColor={"#fff"}>Pricing</Typography></span>
+            <span className='no-select pointer'><Typography textColor={"#fff"}>Support</Typography></span>
+          </Stack>
+          <div className='right-align'>
+            <Button variant='soft'><LocalPhoneIcon sx={{marginRight:"0.5em"}}/>+1 909 963 2559</Button>
+          </div>
+        </div>
+        <div className='nav-menu-group show-tablet-only'>
+          <div className='right-align'>
+            <Stack direction={"row"} spacing={2}>
+              <Button variant='soft'><LocalPhoneIcon sx={{marginRight:"0.5em"}}/>+1 909 963 2559</Button>
+              <MenuIcon fontSize='large'/>
+            </Stack>
+          </div>
+        </div>
+        <div className='nav-menu-group show-mobile-only'>
+          <div className='right-align'>
+            <Stack direction={"row"} spacing={2}>
+              <Button variant='soft'><LocalPhoneIcon/></Button>
+              <MenuIcon fontSize='large'/>
+            </Stack>
+          </div>
+        </div>
+      </nav>
+    )
+  }
+
+  const ContactForm = () => {
+    return(
+      <div className='contact-form-container'>
+        <Typography level='h1' textColor={"#1a6db0"}>What Are Your Goals?</Typography>
+        <form className='contact-form-grid'>
+
+          <div className='contact-form-field'>
+            <Input placeholder='Name'/>
+          </div>
+          
+          <div className='contact-form-field'>
+            <Input placeholder='Email'/>
+          </div>
+          
+          <div className='contact-form-field'>
+            <Input placeholder='Phone'/>
+          </div>
+
+          <div className='contact-form-field'>
+            <Input placeholder='Company'/>
+          </div>
+
+          <div className='contact-form-field'>
+            <Select defaultValue={"standalone"}>
+              <Option value={"standalone"}>Standalone Software</Option>
+              <Option value={"web"}>Web Development</Option>
+              <Option value={"mobile"}>Mobile App</Option>
+            </Select>
+          </div>
+
+          <div className='contact-form-area'>
+            <Textarea placeholder='Details' minRows={5.5}/>
+          </div>
+
+          <div className='contact-form-field'>
+            <Button variant='solid'>Submit</Button>
+          </div>
+          
+        </form>
+      </div>
+    )
+  }
+
+  const FAQS = () => {
+    return (
+      <div className='questions'>
+        <Typography level='h1' textColor={"#1a6db0"}>FAQs</Typography>
         <AccordionGroup size='lg' variant='soft' transition="0.25s ease">
           <Accordion>
             <AccordionSummary><b>Will you work on my project from dream to reality?</b></AccordionSummary>
@@ -235,31 +405,34 @@ export default function Home() {
             </AccordionDetails>
           </Accordion>
         </AccordionGroup>
-        
-      </main>
-      
+      </div>
+    )
+  }
+
+  const Footer = () => {
+    return(
       <footer>
-        <Cyberplug/>
+        <Logo/>
         <div className='footer-flex'>
           <div className='footer-flex-group'>
-            <a href='#'><Typography level="h4" textColor={"#fff"}>Contact</Typography></a>
+            <Typography level="h4" textColor={"#fff"}>Contact</Typography>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Phone: +1 909 963 2559</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Email: contact@cyberplug.net</Typography></a>
           </div>
           <div className='footer-flex-group'>
-            <a href='#'><Typography level="h4" textColor={"#fff"}>About</Typography></a>
+            <Typography level="h4" textColor={"#fff"}>About</Typography>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Why Cyberplug</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Who we serve</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Portfolio</Typography></a>
           </div>
           <div className='footer-flex-group'>
-            <a href='#'><Typography level="h4" textColor={"#fff"}>Services</Typography></a>
+            <Typography level="h4" textColor={"#fff"}>Services</Typography>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Software Development</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Web Development</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Mobile App Development</Typography></a>
           </div>
           <div className='footer-flex-group'>
-            <a href='#'><Typography level="h4" textColor={"#fff"}>Legal</Typography></a>
+            <Typography level="h4" textColor={"#fff"}>Legal</Typography>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Terms of Use</Typography></a>
             <a href='#'><Typography level="body-sm" textColor={"#fff"}>Privacy Policy</Typography></a>
           </div>
@@ -268,6 +441,22 @@ export default function Home() {
           </div>
         </div>
       </footer>
+    )
+  }
+
+  //page TSX
+  return (
+    <React.Fragment>
+      <Navbar/>
+      <main className="main">     
+        <Carousel/>
+        <div className='main-padded'>
+          <ToolsSection/>
+          <ContactForm/>
+          <FAQS/>
+        </div>
+      </main>
+      <Footer/>
     </React.Fragment>
   )
 }

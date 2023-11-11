@@ -1,10 +1,10 @@
 
 /*
-Tailwind is interfering with Joy UI components*/
+Tailwind is interfering with Joy UI components
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+*/
 
 :root {
   --bkg-grad-start: #a3bded;
@@ -16,11 +16,20 @@ html {
   min-height: 100%;
   color: #fff;
   overflow-y: scroll;
+  font-family: 'Inter';
+  background-color: var(--bkg-grad-end);
 }
 
 body {
   margin: 0;
   background-image: linear-gradient(to top, var(--bkg-grad-start) 0%, var(--bkg-grad-end) 100%);
-  color: #fff;
+  
+  .no-select {
+    user-select: none;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
 }
 
