@@ -122,7 +122,7 @@ export default function Home() {
         >
           
           <SwiperSlide>
-            <img className='tool-img' src="/logos/c++.svg" alt="c++" />
+            <img className='tool-img' src="/logos/cpp.svg" alt="cpp" />
           </SwiperSlide>
           <SwiperSlide>
             <img className='tool-img' src="/logos/c-sharp.svg" alt="c#" />
